@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Make it compatible to mobile or other devices --> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Identification</title>
+    <style>
+        body {
+            /* Continuous flowing gradient with no reverse movement */
+            background: linear-gradient(45deg, #ffffff, #191716, #6a34ff, #ffffff);
+            background-size: 200% 200%; /* Expand the gradient to give more space for smooth movement */
+            /*animation: waveFlow 5s linear infinite; */
+
+            height: 130vh; /* Ensure the background covers the entire viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        /* Keyframe animation for continuous smooth flow */
+        /* @keyframes waveFlow {
+            0% {
+                /* Start from the left side */
+                /* background-position: 0% 50%;  */
+            /* }
+            100% { */
+                /* End at the right side */
+                /* background-position: 100% 50%;  */
+            /* } */
+            
+        /* } */ */
+
+        /* Form container style */
+        .FILL{
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 10px 4px 8px rgb(0, 0, 0);
+            width: 500px;
+            /*text-align: left;*/
+        }
+
+        /* Flexbox to align label and input side by side */
+        .group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .group label {
+            width: 30%; /* Controls the width of the label */
+            /*text-align: right;*/ /* Aligns the label text to the right */
+            /* margin-right: 30px;*/ /*Adds space between the label and input */
+            color: #ffffff;
+            font-size: medium;
+            /*display: block;*/
+            margin-bottom: 5px;
+        }
+        .group input, .group select {
+            width: 100%; /* Controls the width of the input field */
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+            margin-bottom: 15px;    /* Add some space between inputs */
+        }
+
+        /* Button specific style */
+        .FILL button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #150c0f;
+            color: white;
+            cursor: pointer;
+        }
+
+        .FILL button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 35px;
+            color: #ffffff;
+            text-decoration: underline;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="FILL">
+        <h1>Stroke Prediction System</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="group">
+            <label for="id">ID:</label><br>
+            <input type="number" id="id" name="id" placeholder="Enter Id" ><br><br>
+            </div>
+
+            <div class="group">
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select><br><br>
+            </div>
+            
+            <div class="group">
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" step="any" placeholder="Enter Age" required><br><br>
+            </div>
+
+            <div class="group">
+            <label for="hypertension">Hypertension (0/1):</label><br>
+            <input type="number" id="hypertension" name="hypertension" min="0" max="1" placeholder="0 or 1" required><br><br>
+            </div>
+
+            <div class="group">
+            <label for="heart_disease">Heart Disease (0/1):</label><br>
+            <input type="number" id="heart_disease" name="heart_disease" min="0" max="1" placeholder="0 or 1" required><br><br>
+            </div>
+
+            <div class="group">
+            <label for="ever_married">Ever Married:</label><br>
+            <select id="ever_married" name="ever_married" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select><br><br>
+            </div>
+
+            <div class="group">
+            <label for="work_type">Work Type:</label><br>
+            <select id="work_type" name="work_type" required>
+                <option value="Private">Private</option>
+                <option value="Self-employed">Self-employed</option>
+                <option value="Govt_job">Govt Job</option>
+                <option value="Children">Children</option>
+                <option value="Never_worked">Never Worked</option>
+            </select><br><br>
+            </div>
+
+            <div class="group">
+            <label for="residence_type">Residence Type:</label><br>
+            <select id="residence_type" name="residence_type"  placeholder="🏙️ or 🏞️"required>
+                <option value="Urban">Urban</option>
+                <option value="Rural">Rural</option>
+            </select><br><br>
+            </div>
+
+            <div class="group">
+            <label for="avg_glucose_level">Average Glucose Level:</label><br>
+            <input type="number" id="avg_glucose_level" name="avg_glucose_level" step="any" placeholder="Enter Glucose-Level" required><br><br>
+            </div>
+
+            <div class="group">
+            <label for="bmi">BMI:</label><br>
+            <input type="number" id="bmi" name="bmi" step="any" placeholder="Enter BMI" required><br><br>
+            </div>
+
+            <div class="group">
+            <label for="smoking_status">Smoking Status:</label><br>
+            <select id="smoking_status" name="smoking_status" required>
+                <option value="never smoked">Never Smoked</option>
+                <option value="formerly smoked">Formerly Smoked</option>
+                <option value="smokes">Smokes</option>
+                <option value="smokes">Unknown</option>
+            </select><br><br>
+            </div>
+
+            <!-- Image upload -->
+            <div class="group">
+            <label for="image" style="margin-right: 130px; white-space: nowrap;">Upload MRI Image(If you have any):</label><br>
+            <input type="file" id="image" name="image" accept="image/*" style="width: 30%; margin-right: 150px; border-color: white;"><br><br>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
