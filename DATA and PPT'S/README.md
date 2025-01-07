@@ -1,2 +1,0 @@
-# STROKE-IDENTIFICATION
-Medical Project
